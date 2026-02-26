@@ -1,0 +1,14 @@
+services:
+  # Static website service
+  - type: web
+    name: multiplayer-chess
+    env: static
+    buildCommand: "echo 'No build needed'"
+    staticPublishPath: ./public
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: NODE_VERSION
+        value: 18

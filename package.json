@@ -1,0 +1,24 @@
+{
+  "name": "multiplayer-chess",
+  "version": "1.0.0",
+  "description": "Багатокористувацькі шахи з системою лобі та режимом Moded",
+  "main": "index.html",
+  "scripts": {
+    "start": "cd public && python -m http.server 8000",
+    "dev": "cd public && python -m http.server 8000",
+    "build": "echo 'No build process needed for static site'",
+    "deploy": "echo 'Ready for Render deployment'"
+  },
+  "keywords": [
+    "chess",
+    "multiplayer",
+    "game",
+    "lobby",
+    "moded"
+  ],
+  "author": "Chess Developer",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
