@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Багатокористувацькі Шахи</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- Головне меню -->
+        <div id="mainMenu" class="screen active">
+            <div class="menu-container">
+                <h1 class="game-title">
+                    <i class="fas fa-chess"></i>
+                    Багатокористувацькі Шахи
+                </h1>
+                <div class="menu-buttons">
+                    <button class="btn btn-primary" onclick="showScreen('lobbyMenu')">
+                        <i class="fas fa-users"></i>
+                        Лобі
+                    </button>
+                    <button class="btn btn-secondary" onclick="showScreen('gameModes')">
+                        <i class="fas fa-gamepad"></i>
+                        Режими гри
+                    </button>
+                    <button class="btn btn-info" onclick="showScreen('settings')">
+                        <i class="fas fa-cog"></i>
+                        Налаштування
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Меню лобі -->
+        <div id="lobbyMenu" class="screen">
+            <div class="menu-container">
+                <h2>
+                    <i class="fas fa-door-open"></i>
+                    Лобі
+                </h2>
+                <div class="lobby-options">
+                    <button class="btn btn-primary" onclick="createLobby('1v1')">
+                        <i class="fas fa-user"></i>
+                        1 на 1
+                    </button>
+                    <button class="btn btn-primary" onclick="createLobby('2v2')">
+                        <i class="fas fa-users"></i>
+                        2 на 2
+                    </button>
+                    <button class="btn btn-primary" onclick="createLobby('4v4')">
+                        <i class="fas fa-users-gear"></i>
+                        4 на 4
+                    </button>
+                    <button class="btn btn-secondary" onclick="joinLobby()">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Приєднатися до лобі
+                    </button>
+                </div>
+                <div class="active-lobbies" id="activeLobbies">
+                    <h3>Активні лобі:</h3>
+                    <div class="lobby-list"></div>
+                </div>
+                <button class="btn btn-back" onclick="showScreen('mainMenu')">
+                    <i class="fas fa-arrow-left"></i>
+                    Назад
+                </button>
+            </div>
+        </div>
+
+        <!-- Режими гри -->
+        <div id="gameModes" class="screen">
+            <div class="menu-container">
+                <h2>
+                    <i class="fas fa-chess-board"></i>
+                    Режими гри
+                </h2>
+                <div class="mode-options">
+                    <button class="btn btn-primary" onclick="startGame('classic')">
+                        <i class="fas fa-chess-king"></i>
+                        Класичний
+                    </button>
+                    <button class="btn btn-warning" onclick="startGame('moded')">
+                        <i class="fas fa-magic"></i>
+                        Moded (з бафами)
+                    </button>
+                </div>
+                <div class="mode-description" id="modeDescription">
+                    <p>Оберіть режим гри для початку</p>
+                </div>
+                <button class="btn btn-back" onclick="showScreen('mainMenu')">
+                    <i class="fas fa-arrow-left"></i>
+                    Назад
+                </button>
+            </div>
+        </div>
+
+        <!-- Налаштування -->
+        <div id="settings" class="screen">
+            <div class="menu-container">
+                <h2>
+                    <i class="fas fa-cog"></i>
+                    Налаштування
+                </h2>
+                <div class="settings-options">
+                    <div class="setting-item">
+                        <label for="playerName">Ім'я гравця:</label>
+                        <input type="text" id="playerName" placeholder="Введіть ваше ім'я">
+                    </div>
+                    <div class="setting-item">
+                        <label for="theme">Тема:</label>
+                        <select id="theme">
+                            <option value="classic">Класична</option>
+                            <option value="dark">Темна</option>
+                            <option value="ocean">Океан</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label for="soundEffects">Звукові ефекти:</label>
+                        <input type="checkbox" id="soundEffects" checked>
+                    </div>
+                </div>
+                <button class="btn btn-back" onclick="showScreen('mainMenu')">
+                    <i class="fas fa-arrow-left"></i>
+                    Назад
+                </button>
+            </div>
+        </div>
+
+        <!-- Ігровий екран -->
+        <div id="gameScreen" class="screen">
+            <div class="game-container">
+                <div class="game-header">
+                    <div class="player-info">
+                        <div class="player" id="player1">
+                            <span class="player-name">Гравець 1</span>
+                            <span class="player-time">10:00</span>
+                        </div>
+                        <div class="game-status">
+                            <span id="gameStatus">Хід білих</span>
+                        </div>
+                        <div class="player" id="player2">
+                            <span class="player-name">Гравець 2</span>
+                            <span class="player-time">10:00</span>
+                        </div>
+                    </div>
+                    <div class="game-controls">
+                        <button class="btn btn-small" onclick="pauseGame()">
+                            <i class="fas fa-pause"></i>
+                        </button>
+                        <button class="btn btn-small" onclick="surrenderGame()">
+                            <i class="fas fa-flag"></i>
+                        </button>
+                        <button class="btn btn-small" onclick="exitGame()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="game-board-container">
+                    <div class="buffs-panel" id="buffsPanel">
+                        <h3>Активні бафи:</h3>
+                        <div class="buffs-list"></div>
+                    </div>
+                    <div class="chess-board" id="chessBoard"></div>
+                    <div class="game-info">
+                        <div class="captured-pieces">
+                            <h4>Захоплені фігури:</h4>
+                            <div class="captured-white"></div>
+                            <div class="captured-black"></div>
+                        </div>
+                        <div class="move-history">
+                            <h4>Історія ходів:</h4>
+                            <div class="moves-list"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
